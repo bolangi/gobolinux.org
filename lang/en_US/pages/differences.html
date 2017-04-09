@@ -1,0 +1,50 @@
+<p>GoboLinux has a directory structure different from other Linux
+distributions. In GoboLinux, all files for a program, including
+executables, headers and libraries, are installed below a single
+directory that belongs to that program. So the <code>ping</code>
+utility might reside in</p>
+
+<pre><code>/Programs/Netkit-Base/0.17/bin/ping
+</code></pre>
+
+<p>and <code>libpng.so.3</code> in</p>
+
+<pre><code>/Programs/LibPNG/1.2.5/lib/libpng.so.3
+</code></pre>
+
+<p>To be visible to other software, these files are symlinked into standard
+locations in the new directory hierarchy under <code>/System/Index</code>:</p>
+
+<pre><code>/System/Index/bin/ping  
+/System/Index/lib/libpng.so.3
+</code></pre>
+
+<p>Traditional Unix paths are also symlinks to the <code>/System/Index</code>
+directory structure:</p>
+
+<pre><code>/bin     -&gt; /System/Index/bin  
+/usr/bin -&gt; /System/Index/bin  
+/usr/lib -&gt; /System/Index/lib  
+/etc     -&gt; /System/Settings
+</code></pre>
+
+<p>As a result, most things just work. For example, GoboLinux will
+correctly dispatch scripts with shebang lines such as
+<code>#!/usr/bin/env perl</code> or <code>#!/usr/bin/python</code> to the proper
+interpreter.</p>
+
+<p>This architecture -- installing each program under its own directory,
+and making executables, headers other resources available via symlinks
+-- has significant advantages:</p>
+
+<ul>
+<li>different versions of libraries can coexist</li>
+<li>it's trivial to uninstall software</li>
+<li>there's no need for a database of installed files</li>
+</ul>
+
+<p>The system is administered through a limited set of
+<a href="GoboLinux-Command-Reference">utility programs</a>.
+Tracking dependency relations among software is accomplished
+through the <a href="Compiling-from-source">GoboLinux build system</a>
+and its library of <a href="Recipe">"compile recipes"</a>.</p>
